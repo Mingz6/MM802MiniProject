@@ -2,14 +2,21 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import { readString } from 'react-papaparse';
 import './App.css';
+import moment from 'moment';
 
 const CovidCases: React.FC = () => {
 
     const [cases, setCases] = useState<any[]>([]);
 
     const loadData = useCallback(async () => {
-        const cases = await GetData();
-        const filteredCases = cases.data.filter((c: any) => c.prname === 'Canada');
+        const response = await fetch('covid19-download.csv');
+        const reader = response.body?.getReader();
+        const result = await reader?.read();
+        const decoder = new TextDecoder('utf-8');
+        const csv = await decoder.decode(result?.value);
+        const convertedCSV = readString(csv, { header: true, dynamicTyping: true });
+        // console.log(data);
+        const filteredCases = convertedCSV.data.filter((c: any) => c.prname === 'Canada').sort(sortByDate);
         setCases(filteredCases);
     }, []);
     
@@ -31,26 +38,14 @@ const CovidCases: React.FC = () => {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="numtotal" stroke="blue" />
+                <Line type="monotone" dataKey="numconf" stroke="blue" />
                 <Line type="monotone" dataKey="numdeaths" stroke="red" />
             </LineChart>
         </div>
     );
 
-    async function GetData() {
-        const data = readString(await fetchCsv(), { header: true, dynamicTyping: true });
-        // console.log(data);
-        return data;
-    }
-
-    async function fetchCsv() {
-        const response = await fetch('covid19-download.csv');
-        const reader = response.body?.getReader();
-        const result = await reader?.read();
-        const decoder = new TextDecoder('utf-8');
-        const csv = await decoder.decode(result?.value);
-        // console.log('csv', csv);
-        return csv;
+    function sortByDate(a: any, b: any) {
+        return moment(a.date).isAfter(moment(b.date)) ? 1 : -1;
     }
 }
 
