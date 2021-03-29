@@ -16,9 +16,11 @@ const HomePage: React.FC = () => {
         <Button type="primary" href="/health-info">
           Health Info
         </Button>
+        <Button type="primary" href="/Vaccines">
+          Vaccines
+        </Button>
       </Space>
     </div>
   );
 };
-
 export default HomePage;
