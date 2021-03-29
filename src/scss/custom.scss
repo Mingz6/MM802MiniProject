@@ -1,5 +1,5 @@
 body {
-  margin: 0;
+  margin: 100;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -10,4 +10,17 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.text-style {
+  text-align: center;
+}
+
+.bannerStyle {
+  text-align: center;
+  border-radius: 8px;
+  max-width: 30%;
+  height: auto;
+  clear: both;
+  padding-top: 2%;
 }
