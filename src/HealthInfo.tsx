@@ -9,7 +9,7 @@ interface IPieData {
   value: number;
 }
 
-const TreatmentsAndVaccines: React.FC = () => {
+const HealthInfo: React.FC = () => {
   const [productCategory, setProductCategory] = useState<IPieData[]>([]);
   const [stageOfDevelopment, setStageOfDevelopment] = useState<IPieData[]>([]);
 
@@ -102,27 +102,13 @@ const TreatmentsAndVaccines: React.FC = () => {
 
   return (
     <div className="container-fluid">
-      <h1>Treatments and Vaccines</h1>
+      <h1>Health Info</h1>
       <PieChart width={1400} height={800}>
         <Pie
           dataKey="value"
-          data={productCategory}
-          cx="20%"
-          cy="40%"
-          outerRadius={250}
-          fill="#8884d8"
-          labelLine={true}
-          label={renderCustomizedLabel}
-        >
-          {productCategory.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Pie
-          dataKey="value"
           data={stageOfDevelopment}
-          cx="80%"
-          cy="40%"
+          cx="50%"
+          cy="50%"
           outerRadius={250}
           fill="#82ca9d"
           labelLine={true}
@@ -135,7 +121,6 @@ const TreatmentsAndVaccines: React.FC = () => {
         <Tooltip />
         <Legend />
       </PieChart>
-
       <Space direction="horizontal" size={8}>
         <Button type="primary" href="/home">
           Return to Home
@@ -143,12 +128,12 @@ const TreatmentsAndVaccines: React.FC = () => {
         <Button type="primary" href="/covid-cases">
           Covid Cases
         </Button>
-        <Button type="primary" href="/health-info">
-          Health Info
+        <Button type="primary" href="/treatments-and-vaccines">
+          Treatments and Vaccines
         </Button>
       </Space>
     </div>
   );
 };
 
-export default TreatmentsAndVaccines;
+export default HealthInfo;
