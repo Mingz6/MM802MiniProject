@@ -12,7 +12,7 @@ class Routes extends React.Component<any, {}> {
       <React.Fragment>
         <Switch>
           <Route path="/home" component={HomePage} />
-          <Route path="/covid-cases" component={CovidCases} />
+          <Route path="/covid-cases" exact component={CovidCases} />
           <Route
             path="/treatments-and-vaccines"
             component={TreatmentsAndVaccines}

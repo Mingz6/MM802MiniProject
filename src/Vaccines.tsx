@@ -195,7 +195,7 @@ const Vaccines: FC = () => {
     className="Vaccines Development Stage"
     title="Vaccines Development Stage"
     subTitle="The table shows the progress and basic situation of vaccines developed by various institutions"
-  />,
+  />
       <Table columns={columns} dataSource={cases}/>
     </div>
   );
