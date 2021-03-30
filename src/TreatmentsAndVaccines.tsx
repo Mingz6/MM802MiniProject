@@ -102,6 +102,29 @@ const TreatmentsAndVaccines: React.FC = () => {
 
   return (
     <div className="container-fluid">
+      <Space direction="horizontal" size={8} className="navigation">
+        <Button type="primary" href="/home">
+          Return to Home
+        </Button>
+        <Button className="homePageButton" type="primary" href="/covid-cases">
+          Covid Cases
+        </Button>
+        <Button className="homePageButton" type="primary" href="/Vaccines">
+          Vaccines
+        </Button>
+        <Button className="homePageButton" type="primary" href="/health-info">
+          Recovery
+        </Button>
+
+        <Button
+          className="homePageButton"
+          type="primary"
+          href="https://docs.google.com/document/d/11WB6BY0G19YKHv7wFfgzVgMeFPyhoawcrPpXn2iMfWw/edit?usp=sharing"
+          target="_blank"
+        >
+          Report Paper
+        </Button>
+      </Space>
       <h1>Treatments and Vaccines</h1>
       <PieChart width={1400} height={800}>
         <Pie
@@ -135,18 +158,6 @@ const TreatmentsAndVaccines: React.FC = () => {
         <Tooltip />
         <Legend />
       </PieChart>
-
-      <Space direction="horizontal" size={8}>
-        <Button type="primary" href="/home">
-          Return to Home
-        </Button>
-        <Button type="primary" href="/covid-cases">
-          Covid Cases
-        </Button>
-        <Button type="primary" href="/health-info">
-          Health Info
-        </Button>
-      </Space>
     </div>
   );
 };
