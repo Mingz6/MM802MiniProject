@@ -2,12 +2,13 @@ import React, { useState, useEffect, useCallback } from "react";
 import { PieChart, Pie, Legend, Tooltip, Cell } from "recharts";
 import { readString } from "react-papaparse";
 import "./App.css";
-import { Button, Space } from "antd";
+import { PageHeader, Typography} from "antd";
 
 interface IPieData {
   name: string;
   value: number;
 }
+const { Paragraph } = Typography;
 
 const TreatmentsAndVaccines: React.FC = () => {
   const [productCategory, setProductCategory] = useState<IPieData[]>([]);
@@ -101,14 +102,28 @@ const TreatmentsAndVaccines: React.FC = () => {
   };
 
   return (
-    <div className="container-fluid">
-      <h1>Treatments and Vaccines</h1>
-      <PieChart width={1400} height={800}>
+    <div>
+      <PageHeader
+        className="Vaccines Pie Chart"
+        title="Vaccines Pie Chart"
+        subTitle="This pie chart shows the percentage of different type and stage of vaccines under development"
+      />
+      <div className="rowC">
+      <Paragraph style={{marginRight:30, marginLeft: 50}}>
+      This pie chart clearly show us the percentage of different type of vaccines under development. It is clear that protein subunit
+      is the most common vaccines types and followed by RNA-based and non-replicating viral.
+      </Paragraph>
+      <Paragraph style={{marginRight:30}}>Although a large number of medical companies and institutions around the world have invested in the research and
+         development of the Covid vaccine. But most of them are still in the preliminary stage. Only a very small number of vaccines 
+         have completed clinical trials. </Paragraph>
+    </div>
+    <div className='rowC' style={{marginLeft: 50}}>
+      <PieChart width={750} height={745}>
         <Pie
           dataKey="value"
           data={productCategory}
-          cx="20%"
-          cy="40%"
+          cx="50%"
+          cy="50%"
           outerRadius={250}
           fill="#8884d8"
           labelLine={true}
@@ -118,11 +133,15 @@ const TreatmentsAndVaccines: React.FC = () => {
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
+        <Tooltip />
+        <Legend />
+        </PieChart>
+        <PieChart width={750} height={700}>
         <Pie
           dataKey="value"
           data={stageOfDevelopment}
-          cx="80%"
-          cy="40%"
+          cx="50%"
+          cy="50%"
           outerRadius={250}
           fill="#82ca9d"
           labelLine={true}
@@ -135,18 +154,8 @@ const TreatmentsAndVaccines: React.FC = () => {
         <Tooltip />
         <Legend />
       </PieChart>
+    </div>
 
-      <Space direction="horizontal" size={8}>
-        <Button type="primary" href="/home">
-          Return to Home
-        </Button>
-        <Button type="primary" href="/covid-cases">
-          Covid Cases
-        </Button>
-        <Button type="primary" href="/health-info">
-          Health Info
-        </Button>
-      </Space>
     </div>
   );
 };

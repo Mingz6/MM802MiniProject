@@ -16,8 +16,23 @@ code {
   background: #fff;
 }
 
+.site-layout {
+  background: #fff;
+}
+
 .logo {
   height: 42px;
   margin: 5px 5px 12px 11px;
-  background: rgba(255, 255, 255, 0.3);
 }
+
+.peiChart {
+  width: 700px;
+  height: 700px;
+}
+
+.mainpara {
+  margin-left: 25px;
+  margin-right: 50px;
+}
+
+.rowC{display:flex; flex-direction:row;}

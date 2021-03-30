@@ -2,7 +2,7 @@ import React, { FC, useCallback, useState, useEffect } from "react";
 import { readString } from "react-papaparse";
 import "antd/dist/antd.css";
 import "./index.css";
-import { Table, Tag, Progress, PageHeader} from "antd";
+import { Table, Tag, Progress, PageHeader } from "antd";
 
 const columns = [
   {
@@ -18,44 +18,44 @@ const columns = [
     width: 200,
     filters: [
       {
-        text: 'DNA-based',
-        value: 'DNA-based',
+        text: "DNA-based",
+        value: "DNA-based",
       },
       {
-        text: 'Inactivated virus',
-        value: 'Inactivated virus',
+        text: "Inactivated virus",
+        value: "Inactivated virus",
       },
       {
-        text: 'Replicating bacterial vector',
-        value: 'Replicating bacterial vector',
+        text: "Replicating bacterial vector",
+        value: "Replicating bacterial vector",
       },
       {
-        text: 'Unknown',
-        value: 'Unknown',
+        text: "Unknown",
+        value: "Unknown",
       },
       {
-        text: 'Virus-like particle',
-        value: 'Virus-like particle',
+        text: "Virus-like particle",
+        value: "Virus-like particle",
       },
       {
-        text: 'RNA-based vaccine',
-        value: 'RNA-based vaccine',
+        text: "RNA-based vaccine",
+        value: "RNA-based vaccine",
       },
       {
-        text: 'Replicating viral vector',
-        value: 'Replicating viral vector',
+        text: "Replicating viral vector",
+        value: "Replicating viral vector",
       },
       {
-        text: 'Protein subunit',
-        value: 'Protein subunit',
+        text: "Protein subunit",
+        value: "Protein subunit",
       },
       {
-        text: 'Non-replicating viral vector',
-        value: 'Non-replicating viral vector',
+        text: "Non-replicating viral vector",
+        value: "Non-replicating viral vector",
       },
       {
-        text: 'Live attenuated virus',
-        value: 'UnkLive attenuated virus',
+        text: "Live attenuated virus",
+        value: "UnkLive attenuated virus",
       },
     ],
     onFilter: (value: any, record: any) => record.Category.indexOf(value) === 0,
@@ -85,7 +85,7 @@ const columns = [
           {Category}
         </Tag>
       );
-    }
+    },
   },
   {
     title: "Stage of Development",
@@ -95,32 +95,32 @@ const columns = [
     onFilter: (value: any, record: any) => record.Stage.indexOf(value) === 0,
     filters: [
       {
-        text: 'Pre-clinical',
-        value: 'Pre-clinical',
+        text: "Pre-clinical",
+        value: "Pre-clinical",
       },
       {
-        text: 'Authorized',
-        value: 'Authorized',
+        text: "Authorized",
+        value: "Authorized",
       },
       {
-        text: 'Phase I',
-        value: 'Phase I',
+        text: "Phase I",
+        value: "Phase I",
       },
       {
-        text: 'Phase I/II',
-        value: 'Phase I/II',
+        text: "Phase I/II",
+        value: "Phase I/II",
       },
       {
-        text: 'Phase II',
-        value: 'Phase II',
+        text: "Phase II",
+        value: "Phase II",
       },
       {
-        text: 'Phase II/III',
-        value: 'Phase II/III',
+        text: "Phase II/III",
+        value: "Phase II/III",
       },
       {
-        text: 'Phase III',
-        value: 'Phase III',
+        text: "Phase III",
+        value: "Phase III",
       },
     ],
     render: (Stage: string) => {
@@ -145,27 +145,26 @@ const columns = [
           <Progress
             strokeColor={{
               "0%": "#108ee9",
-              "100%": "#87d068"
+              "100%": "#87d068",
             }}
             percent={percent}
             format={() => Stage}
           />{" "}
         </div>
       );
-    }
+    },
   },
   {
     title: "Anticipated Next Steps",
     key: "Anticipated",
-    dataIndex: "Anticipated Next Steps"
+    dataIndex: "Anticipated Next Steps",
   },
   {
     title: "Date Last Updated",
     key: "Date",
-    dataIndex: "Date Last Updated"
-  }
+    dataIndex: "Date Last Updated",
+  },
 ];
-
 
 const Vaccines: FC = () => {
   const [cases, setCases] = useState<any[]>([]);
@@ -178,7 +177,7 @@ const Vaccines: FC = () => {
     const csv = await decoder.decode(result?.value);
     const convertedCSV = readString(csv, {
       header: true,
-      dynamicTyping: true
+      dynamicTyping: true,
     });
     const results = convertedCSV.data;
     setCases(results);

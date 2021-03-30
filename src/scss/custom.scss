@@ -22,5 +22,26 @@ code {
   max-width: 30%;
   height: auto;
   clear: both;
-  padding-top: 2%;
+  padding-top: 5%;
+}
+
+.homePageButton {
+  text-align: center;
+  padding-top: 10%;
+}
+
+.submission {
+  text-align: center;
+  background-color: powderblue;
+  position: absolute;
+
+  right: 0;
+  bottom: 0px;
+}
+
+.navigation {
+  background-color: #007c41;
+  width: 100%;
+  text-align: center;
+  justify-content: center;
 }
