@@ -6,71 +6,32 @@ import { Button, Space } from "antd";
 
 interface TreeData {
   name: string;
-  value: number;
+  children: TreeNode[];
 }
 
-const HealthInfo: React.FC = () => {
-  const [productCategory, setProductCategory] = useState<TreeData[]>([]);
+interface TreeNode {
+  name: string;
+  size: number;
+}
 
-  const loadData = useCallback(async () => {
-    const response = await fetch("vaccination-coverage.csv");
-    const reader = response.body?.getReader();
-    const result = await reader?.read();
-    const decoder = new TextDecoder("utf-8");
-    const csv = await decoder.decode(result?.value);
-    const convertedCSV = readString(csv, { header: true, dynamicTyping: true });
-    const results = convertedCSV.data;
+const defaultTree: TreeData[] = [
+  {
+    name: 'axis',
+    children: [
+      { name: 'Axes', size: 1302 },
+      { name: 'Axis', size: 24593 },
+      { name: 'AxisGridLine', size: 652 },
+      { name: 'AxisLabel', size: 636 },
+      { name: 'CartesianAxes', size: 6703 },
+    ],
+  }
+]
 
-    const tempCategory: any[] = [];
-    results.forEach((r: any) => {
-      if (!tempCategory.some((pc) => pc.name === r.ProductCategory)) {
-        if (r.ProductCategory !== undefined) {
-          tempCategory.push({ name: r.ProductCategory, value: 1 });
-        }
-      } else {
-        let index = tempCategory.findIndex(
-          (pc) => pc.name === r.ProductCategory
-        );
-        tempCategory[index].value += 1;
-      }
-    });
-    setProductCategory(tempCategory);
-  }, []);
-
-  useEffect(() => {
-    loadData();
-  }, [loadData]);
-
-  const COLORS = [
-    "#0088FE",
-    "#00C49F",
-    "#FFBB28",
-    "#FF8042",
-    "#ff0000",
-    "#ff4000",
-    "#ff8000",
-    "#ffbf00",
-    "#ffff00",
-    "#bfff00",
-    "#ffbf00",
-    "#ffff00",
-    "#bfff00",
-  ];
-
-  const CustomizedContent = (props: any) => {
-    const {
-      root,
-      depth,
-      x,
-      y,
-      width,
-      height,
-      index,
-      colors,
-      name,
-      value,
-    } = props;
-    console.log(value);
+class CustomizedContent extends React.PureComponent {
+  render() {
+    console.log(this.props);
+    // @ts-ignore: not sure wdf is going on
+    const { root, depth, x, y, width, height, index, colors, name } = this.props;
 
     return (
       <g>
@@ -80,77 +41,101 @@ const HealthInfo: React.FC = () => {
           width={width}
           height={height}
           style={{
-            fill:
-              depth < 2
-                ? colors[Math.floor((index / root.children.length) * 6)]
-                : "none",
-            stroke: "#fff",
-            strokeWidth: 2 / (depth + 1e-10),
+            fill: depth < 2 ? colors[Math.floor((index / root.children.length) * 25)] : 'none',
+            //fill: depth < 2 ? colors[index] : 'none',
+            stroke: '#fff',
+            strokeWidth: 3 / (depth + 1e-10),
             strokeOpacity: 1 / (depth + 1e-10),
           }}
         />
         {depth === 1 ? (
-          <text
-            x={x + width / 2}
-            y={y + height / 2 + 7}
-            textAnchor="middle"
-            fill="#fff"
-            fontSize={14}
-          >
+          <text x={x + width / 2} y={y + height / 2 + 7} textAnchor="middle" fill="#fff" fontSize={16}>
             {name}
           </text>
         ) : null}
         {depth === 1 ? (
-          <text
-            x={x + 4}
-            y={y + 18}
-            fill="#fff"
-            fontSize={16}
-            fillOpacity={0.9}
-          >
+          <text x={x + 5} y={y + 20} fill="#fff" fontSize={16} fillOpacity={0.9}>
             {index + 1}
           </text>
         ) : null}
       </g>
     );
-  };
+  }
+}
+
+const HealthInfo: React.FC = () => {
+  const [data, setData] = useState<TreeData[]>(defaultTree);
+
+  const loadData = useCallback(async () => {
+    const response = await fetch("vaccination-coverage.csv");
+    const reader = response.body?.getReader();
+    const result = await reader?.read();
+    const decoder = new TextDecoder("utf-8");
+    const csv = await decoder.decode(result?.value);
+    const convertedCSV = readString(csv, { header: true, dynamicTyping: true });
+    const results = convertedCSV.data;
+    const tempTreeData: TreeData[] = [];
+    results.forEach((r: any) => {
+      if (r.prename !== undefined) {
+        let singleTreeData: TreeData = {
+          name: r.prename,
+          children: []
+        };
+        singleTreeData.children.push({ name: 'numtotal_1dose', size: r.numtotal_1dose });
+        singleTreeData.children.push({ name: 'numtotal_2doses', size: r.numtotal_2doses });
+        tempTreeData.push(singleTreeData);
+      }
+    });
+    console.log(tempTreeData);
+    setData(tempTreeData);
+  }, []);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  const COLORS = [
+    "#8889DD",
+    "#9597E4",
+    "#8DC77B",
+    "#A5D297",
+    "#E2CF45",
+    "#F8C12D",
+    "#0088FE",
+    "#00C49F",
+    "#FFBB28",
+    "#FF8042",
+    "#ff0000",
+    "#ff8000",
+    "#ffbf00",
+    "#bfff00",
+    "#ffbf00",
+    "#ffff00",
+    "#9400D3",
+    "#4B0082",
+    "#0000FF",
+    "#00FF00",
+    "#FF0000",
+  ];
 
   return (
     <div className="container-fluid">
       <Space direction="horizontal" size={8} className="navigation">
-        <Button type="primary" href="/home">
-          Return to Home
-        </Button>
-        <Button className="homePageButton" type="primary" href="/covid-cases">
-          Covid Cases
-        </Button>
-        <Button className="homePageButton" type="primary" href="/Vaccines">
-          Vaccines
-        </Button>
-        <Button
-          className="homePageButton"
-          type="primary"
-          href="/treatments-and-vaccines"
-        >
-          Treatments and Vaccines
-        </Button>
-        <Button
-          className="homePageButton"
-          type="primary"
-          href="https://docs.google.com/document/d/11WB6BY0G19YKHv7wFfgzVgMeFPyhoawcrPpXn2iMfWw/edit?usp=sharing"
-          target="_blank"
-        >
-          Report Paper
-        </Button>
+        <Button type="primary" href="/home">Return to Home</Button>
+        <Button className="homePageButton" type="primary" href="/covid-cases">Covid Cases</Button>
+        <Button className="homePageButton" type="primary" href="/Vaccines">Vaccines</Button>
+        <Button className="homePageButton" type="primary" href="/treatments-and-vaccines">Treatments and Vaccines</Button>
+        <Button className="homePageButton" type="primary" href="https://docs.google.com/document/d/11WB6BY0G19YKHv7wFfgzVgMeFPyhoawcrPpXn2iMfWw/edit?usp=sharing" target="_blank">Report Paper</Button>
       </Space>
-      <h1>Recovery</h1>
+      <h1>Vaccine Coverage</h1>
       <Treemap
-        width={400}
-        height={200}
-        data={productCategory}
+        width={1600}
+        height={1000}
+        data={data}
         dataKey="size"
         stroke="#fff"
         fill="#8884d8"
+        //@ts-ignore
         content={<CustomizedContent colors={COLORS} />}
       >
         <Tooltip />
