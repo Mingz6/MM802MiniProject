@@ -1,12 +1,12 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+/* import { Link } from "react-router-dom";*/
 import { Button, Space } from "antd";
 
 const HomePage: React.FC = () => {
   return (
     <div className="d-flex flex-column text-style">
       <Space direction="vertical" size={8}>
-        <img src="./UofABanner.png" className="bannerStyle" />
+        <img src="./UofABanner.png" className="bannerStyle" alt="Banner" />
 
         <h1>MM802 - Mini Project</h1>
         <Button className="homePageButton" type="primary" href="/covid-cases">

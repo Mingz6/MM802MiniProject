@@ -1,20 +1,19 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { PieChart, Pie, Legend, Tooltip, Cell } from "recharts";
+import { Treemap, Tooltip } from "recharts";
 import { readString } from "react-papaparse";
 import "./App.css";
 import { Button, Space } from "antd";
 
-interface IPieData {
+interface TreeData {
   name: string;
   value: number;
 }
 
 const HealthInfo: React.FC = () => {
-  const [productCategory, setProductCategory] = useState<IPieData[]>([]);
-  const [stageOfDevelopment, setStageOfDevelopment] = useState<IPieData[]>([]);
+  const [productCategory, setProductCategory] = useState<TreeData[]>([]);
 
   const loadData = useCallback(async () => {
-    const response = await fetch("Treatments and Vaccines.csv");
+    const response = await fetch("vaccination-coverage.csv");
     const reader = response.body?.getReader();
     const result = await reader?.read();
     const decoder = new TextDecoder("utf-8");
@@ -36,21 +35,6 @@ const HealthInfo: React.FC = () => {
       }
     });
     setProductCategory(tempCategory);
-
-    const tempStage: any[] = [];
-    results.forEach((r: any) => {
-      if (!tempStage.some((pc) => pc.name === r.StageOfDevelopment)) {
-        if (r.StageOfDevelopment !== undefined) {
-          tempStage.push({ name: r.StageOfDevelopment, value: 1 });
-        }
-      } else {
-        let index = tempStage.findIndex(
-          (pc) => pc.name === r.StageOfDevelopment
-        );
-        tempStage[index].value += 1;
-      }
-    });
-    setStageOfDevelopment(tempStage);
   }, []);
 
   useEffect(() => {
@@ -73,30 +57,61 @@ const HealthInfo: React.FC = () => {
     "#bfff00",
   ];
 
-  const RADIAN = Math.PI / 180;
-  const renderCustomizedLabel = ({
-    cx,
-    cy,
-    midAngle,
-    innerRadius,
-    outerRadius,
-    percent,
-    index,
-  }: any) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+  const CustomizedContent = (props: any) => {
+    const {
+      root,
+      depth,
+      x,
+      y,
+      width,
+      height,
+      index,
+      colors,
+      name,
+      value,
+    } = props;
+    console.log(value);
 
     return (
-      <text
-        x={x}
-        y={y}
-        fill="white"
-        textAnchor={x > cx ? "start" : "end"}
-        dominantBaseline="central"
-      >
-        {`${(percent * 100).toFixed(0)}%`}
-      </text>
+      <g>
+        <rect
+          x={x}
+          y={y}
+          width={width}
+          height={height}
+          style={{
+            fill:
+              depth < 2
+                ? colors[Math.floor((index / root.children.length) * 6)]
+                : "none",
+            stroke: "#fff",
+            strokeWidth: 2 / (depth + 1e-10),
+            strokeOpacity: 1 / (depth + 1e-10),
+          }}
+        />
+        {depth === 1 ? (
+          <text
+            x={x + width / 2}
+            y={y + height / 2 + 7}
+            textAnchor="middle"
+            fill="#fff"
+            fontSize={14}
+          >
+            {name}
+          </text>
+        ) : null}
+        {depth === 1 ? (
+          <text
+            x={x + 4}
+            y={y + 18}
+            fill="#fff"
+            fontSize={16}
+            fillOpacity={0.9}
+          >
+            {index + 1}
+          </text>
+        ) : null}
+      </g>
     );
   };
 
@@ -119,7 +134,6 @@ const HealthInfo: React.FC = () => {
         >
           Treatments and Vaccines
         </Button>
-
         <Button
           className="homePageButton"
           type="primary"
@@ -130,24 +144,17 @@ const HealthInfo: React.FC = () => {
         </Button>
       </Space>
       <h1>Recovery</h1>
-      <PieChart width={1400} height={800}>
-        <Pie
-          dataKey="value"
-          data={stageOfDevelopment}
-          cx="50%"
-          cy="50%"
-          outerRadius={250}
-          fill="#82ca9d"
-          labelLine={true}
-          label={renderCustomizedLabel}
-        >
-          {stageOfDevelopment.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
+      <Treemap
+        width={400}
+        height={200}
+        data={productCategory}
+        dataKey="size"
+        stroke="#fff"
+        fill="#8884d8"
+        content={<CustomizedContent colors={COLORS} />}
+      >
         <Tooltip />
-        <Legend />
-      </PieChart>
+      </Treemap>
     </div>
   );
 };
