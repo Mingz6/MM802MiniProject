@@ -26,7 +26,7 @@ import Vaccines from "./Vaccines";
 import CovidCases from "./CovidCases";
 import TreatmentsAndVaccines from "./TreatmentsAndVaccines";
 import HealthInfo from "./HealthInfo";
-import MainPage from "./MainPage";
+import MainPage from "./mainpage";
 
 const { Header, Content, Footer, Sider } = Layout;
 

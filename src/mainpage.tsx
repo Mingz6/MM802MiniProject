@@ -7,7 +7,7 @@ import React from "react";
 import {Divider,Typography} from "antd";
 import './index.css';
 
-const { Title, Paragraph, Text, Link } = Typography;
+const { Title, Paragraph, Link } = Typography;
 
 const MainPage: React.FC = () => {
 
