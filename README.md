@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Before you run this code you need install all requirement package first:
 
-### 'npm install'
+### `npm install`
 
 In the project directory, you can run:
 
@@ -43,8 +43,31 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## Data
+
+The [Covid case count data](https://ourworldindata.org/coronavirus-source-data) relies on data from Johns Hopkins University
+
+The [vaccines data](https://covid-19tracker.milkeninstitute.org/#vaccines_intro) from Milken Institute and update by ourself.
+
+The [vaccines coverage Data Source](https://health-infobase.canada.ca/covid-19/vaccination-coverage/) from Canada Government.
+
+## Files
+
+All coding file is listed under the src folder, for each file it will have a short document at the top of each file. You will also
+be able to find comments explain each block of code. All multimedia resources are stroged under public folder.
+
 ## Learn More
+
+### React
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Data
+
+For more type of data, you can find it at [University of Toronto Libraries](https://mdl.library.utoronto.ca/covid-19/data).
+
+### Document
+
+For more information related to this project. You may found at this [document](https://docs.google.com/document/d/11WB6BY0G19YKHv7wFfgzVgMeFPyhoawcrPpXn2iMfWw/edit?usp=sharing).
