@@ -1,3 +1,6 @@
+/**
+* Global Style file
+*/
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -11,3 +14,34 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+/*Website Background*/
+.site-layout .site-layout-background {
+  background: #fff;
+}
+
+/*Header color*/
+.site-layout {
+  background: #fff;
+}
+
+/*Website Loge*/
+.logo {
+  height: 42px;
+  margin: 5px 5px 12px 11px;
+}
+
+/*Pei Chart component size*/
+.peiChart {
+  width: 700px;
+  height: 700px;
+}
+
+/*Home page paragraph indent*/
+.mainpara {
+  margin-left: 25px;
+  margin-right: 50px;
+}
+
+/*Divide the space equal for 2 components*/
+.rowC{display:flex; flex-direction:row;}

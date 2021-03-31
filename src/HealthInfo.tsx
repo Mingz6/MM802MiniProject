@@ -1,8 +1,12 @@
+/**
+ * Vaccines Coverage Chart
+ * This component will read the csv file and generate a map of vaccines coverage 
+ */
 import React, { useState, useEffect, useCallback } from "react";
 import { Treemap, Tooltip } from "recharts";
 import { readString } from "react-papaparse";
 import "./App.css";
-import { Button, Space } from "antd";
+import { PageHeader} from "antd";
 
 interface TreeData {
   name: string;
@@ -112,14 +116,13 @@ const HealthInfo: React.FC = () => {
   ];
 
   return (
+    <div>
+      <PageHeader
+        className="Vaccines Coverage Chart"
+        title="Vaccines Coverage Chart"
+        subTitle="This chart shows how many people get at least one vaccine in each province."
+      />
     <div className="container-fluid">
-      <Space direction="horizontal" size={8} className="navigation">
-        <Button type="primary" href="/home">Return to Home</Button>
-        <Button className="homePageButton" type="primary" href="/covid-cases">Covid Cases</Button>
-        <Button className="homePageButton" type="primary" href="/Vaccines">Vaccines</Button>
-        <Button className="homePageButton" type="primary" href="/treatments-and-vaccines">Treatments and Vaccines</Button>
-        <Button className="homePageButton" type="primary" href="https://docs.google.com/document/d/11WB6BY0G19YKHv7wFfgzVgMeFPyhoawcrPpXn2iMfWw/edit?usp=sharing" target="_blank">Report Paper</Button>
-      </Space>
       <h1>Vaccine Coverage</h1>
       <Treemap
         width={1600}
@@ -133,6 +136,7 @@ const HealthInfo: React.FC = () => {
       >
         <Tooltip />
       </Treemap>
+    </div>
     </div>
   );
 };

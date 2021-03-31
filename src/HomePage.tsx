@@ -1,22 +1,91 @@
+/**
+ * Home Page
+ * The page control all component.
+ * This component is only have the header, Footer and sider bar
+ * It will choose the content (other component) base on which menu item be clicked.
+ * UI render with Ant Design
+ */
+// Library
 import * as React from "react";
-/* import { Link } from "react-router-dom";*/
-import { Button, Space } from "antd";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Layout, Menu} from 'antd';
+import {
+  DesktopOutlined,
+  PieChartOutlined,
+  TableOutlined,
+  LineChartOutlined,
+  AppstoreOutlined,
+} from '@ant-design/icons';
 
-const HomePage: React.FC = () => {
+// Style Files
+import 'antd/dist/antd.css';
+import './index.css';
+
+// The content component to be refers
+import Vaccines from "./Vaccines";
+import CovidCases from "./CovidCases";
+import TreatmentsAndVaccines from "./TreatmentsAndVaccines";
+import HealthInfo from "./HealthInfo";
+import MainPage from "./MainPage";
+
+const { Header, Content, Footer, Sider } = Layout;
+
+const HomePage: React.FC = (props) => {
+  const [collapsed, setCollapsed] = React.useState<boolean>(false); // side bar shrink or not
+
+  // onClick action, shrink or extend the bar
+  const onCollapse = (collapsed: boolean) => {
+    console.log(collapsed);
+    setCollapsed(collapsed);
+  };
+
   return (
-    <div className="d-flex flex-column text-style">
-      <Space direction="vertical" size={8}>
-        <img src="./UofABanner.png" className="bannerStyle" alt="Banner" />
-        <h1>MM802 - Mini Project</h1>
-        <Button className="homePageButton" type="primary" href="/covid-cases">Covid Cases</Button>
-        <Button className="homePageButton" type="primary" href="/treatments-and-vaccines">Treatments and Vaccines</Button>
-        <Button className="homePageButton" type="primary" href="/Vaccines">Vaccines</Button>
-        <Button className="homePageButton" type="primary" href="/health-info">Vaccine Coverage</Button>
-        <Button className="homePageButton" type="primary" href="https://docs.google.com/document/d/11WB6BY0G19YKHv7wFfgzVgMeFPyhoawcrPpXn2iMfWw/edit?usp=sharing" target="_blank">Report Paper</Button>
-      </Space>
-
-      <p className="submission">Assignment submited by <br /> Chunyang Liu, Mingzhi Zhu</p>
-    </div>
+    <Router>
+      <div className="container">
+          <Header className="site-layout" style={{ padding: 0, position: 'fixed', zIndex: 1, width: '100%'}}>
+              <img src="./UofABanner.png" alt="logo" className="logo"/>
+          </Header>
+        <Layout>
+          <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} theme="light" 
+            style={{ overflow: 'visible', height: '100vh', position: 'fixed', left: 0, marginTop: 64
+          }}>
+            <Menu defaultSelectedKeys={['1']}>
+              <Menu.Item key="1" icon={<DesktopOutlined />}>
+                <Link to="/"/>
+                Home
+                </Menu.Item>
+              <Menu.Item key="2" icon={<LineChartOutlined />}>
+                <Link to='/CovidCases'/>
+                Covid Case Count
+              </Menu.Item>
+              <Menu.Item key="3" icon={<PieChartOutlined />}>
+                <Link to="/treatments-and-vaccines"/>
+                Vaccines Pie Chart
+              </Menu.Item>
+              <Menu.Item key="4" icon={<TableOutlined />}>
+                <Link to="/Vaccines"/>
+                  Vaccines Table
+              </Menu.Item>
+              <Menu.Item key="5" icon={<AppstoreOutlined />}>
+                <Link to="/health-info"/>
+                  Vaccines Coverage
+              </Menu.Item>
+            </Menu>
+          </Sider>
+          <Layout className="site-layout" style={{ marginLeft: collapsed?80:200, marginTop: 64}}>
+            
+            <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
+              <Route exact path='/' component={MainPage}/>
+              <Route exact path="/Vaccines" component={Vaccines} />
+              <Route exact path="/CovidCases" component={CovidCases} />
+              <Route exact path="/treatments-and-vaccines" component={TreatmentsAndVaccines} />
+              <Route exact path="/health-info" component={HealthInfo} />
+            </Content>
+            <Footer style={{ textAlign: 'center' }}>University of Alberta MRC ©2021 <br/>Created by Chuyang L. and Mingzhi Z.</Footer>
+          </Layout>
+        </Layout>
+      </div>
+    </Router>
   );
 };
 export default HomePage;

@@ -1,10 +1,15 @@
+/**
+ * Vaccines detail table
+ * This component will read the csv file and render the table of vaccines information
+ */
+// Libraries
 import React, { FC, useCallback, useState, useEffect } from "react";
 import { readString } from "react-papaparse";
 import "antd/dist/antd.css";
 import "./index.css";
 import { Table, Tag, Progress, PageHeader } from "antd";
-import { Button, Space } from "antd";
 
+// Table Style
 const columns = [
   {
     title: "Developer / Researcher",
@@ -17,7 +22,7 @@ const columns = [
     dataIndex: "Category",
     key: "Category",
     width: 200,
-    filters: [
+    filters: [          //Filter Style
       {
         text: "DNA-based",
         value: "DNA-based",
@@ -60,7 +65,7 @@ const columns = [
       },
     ],
     onFilter: (value: any, record: any) => record.Category.indexOf(value) === 0,
-    render: (Category: string) => {
+    render: (Category: string) => {         //Tag color
       let color = "geekblue";
       if (Category === "Inactivated virus") {
         color = "volcano";
@@ -94,7 +99,7 @@ const columns = [
     key: "Stage",
     width: 350,
     onFilter: (value: any, record: any) => record.Stage.indexOf(value) === 0,
-    filters: [
+    filters: [            //Filter style
       {
         text: "Pre-clinical",
         value: "Pre-clinical",
@@ -124,7 +129,7 @@ const columns = [
         value: "Phase III",
       },
     ],
-    render: (Stage: string) => {
+    render: (Stage: string) => {            // progressing bar style
       let percent = 0;
       if (Stage === "Pre-clinical") {
         percent = 20;
@@ -141,7 +146,7 @@ const columns = [
       } else if (Stage === "Authorized") {
         percent = 100;
       }
-      return (
+      return (                              // progressing bar color change
         <div style={{ width: 200 }}>
           <Progress
             strokeColor={{
@@ -170,6 +175,7 @@ const columns = [
 const Vaccines: FC = () => {
   const [cases, setCases] = useState<any[]>([]);
 
+  // Csv file reader
   const loadData = useCallback(async () => {
     const response = await fetch("Vaccines.csv");
     const reader = response.body?.getReader();
@@ -184,28 +190,19 @@ const Vaccines: FC = () => {
     setCases(results);
   }, []);
 
+  // read csv file
   useEffect(() => {
     loadData();
   }, [loadData]);
 
-  console.log(cases);
 
   return (
-    <div>
-      <Space direction="horizontal" size={8} className="navigation">
-        <Button type="primary" href="/home">Return to Home</Button>
-        <Button className="homePageButton" type="primary" href="/covid-cases">Covid Cases</Button>
-        <Button className="homePageButton" type="primary" href="/treatments-and-vaccines">Treatments and Vaccines</Button>
-        <Button className="homePageButton" type="primary" href="/health-info">Vaccine Coverage</Button>
-        <Button className="homePageButton" type="primary" href="https://docs.google.com/document/d/11WB6BY0G19YKHv7wFfgzVgMeFPyhoawcrPpXn2iMfWw/edit?usp=sharing" target="_blank">Report Paper</Button>
-      </Space>
-      <PageHeader
-        className="Vaccines Development Stage"
-        title="Vaccines Development Stage"
-        subTitle="The table shows the progress and basic situation of vaccines developed by various institutions"
-      />
-      ,
-      <Table columns={columns} dataSource={cases} />
+    <div><PageHeader
+    className="Vaccines Development Stage"
+    title="Vaccines Development Stage"
+    subTitle="The table shows the progress and basic situation of vaccines developed by various institutions"
+  />
+      <Table columns={columns} dataSource={cases}/>
     </div>
   );
 };

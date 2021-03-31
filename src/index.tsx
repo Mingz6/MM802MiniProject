@@ -1,3 +1,6 @@
+/**
+ * React Home Page
+ */
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.scss";
