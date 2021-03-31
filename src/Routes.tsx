@@ -1,7 +1,3 @@
-/**
- * Router, control the website direction
- * React file
- */
 import * as React from "react";
 import { Route, Switch } from "react-router-dom";
 import HomePage from "./HomePage";
@@ -16,7 +12,7 @@ class Routes extends React.Component<any, {}> {
       <React.Fragment>
         <Switch>
           <Route path="/" component={HomePage} />
-          <Route path="/covid-cases" exact component={CovidCases} />
+          <Route path="/covid-cases" component={CovidCases} />
           <Route
             path="/treatments-and-vaccines"
             component={TreatmentsAndVaccines}

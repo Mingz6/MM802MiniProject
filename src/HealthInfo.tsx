@@ -45,7 +45,7 @@ class CustomizedContent extends React.PureComponent {
           width={width}
           height={height}
           style={{
-            fill: depth < 2 ? colors[Math.floor((index / root.children.length) * 25)] : 'none',
+            fill: depth < 2 ? colors[Math.floor((index / root.children.length) * 13)] : 'none',
             //fill: depth < 2 ? colors[index] : 'none',
             stroke: '#fff',
             strokeWidth: 3 / (depth + 1e-10),
@@ -80,7 +80,7 @@ const HealthInfo: React.FC = () => {
     const results = convertedCSV.data;
     const tempTreeData: TreeData[] = [];
     results.forEach((r: any) => {
-      if (r.prename !== undefined) {
+      if (r.prename !== undefined && r.prename !== '') {
         let singleTreeData: TreeData = {
           name: r.prename,
           children: []
@@ -100,21 +100,14 @@ const HealthInfo: React.FC = () => {
 
   const COLORS = [
     "#8889DD",
-    "#9597E4",
     "#8DC77B",
     "#A5D297",
     "#E2CF45",
-    "#F8C12D",
     "#0088FE",
     "#00C49F",
     "#FFBB28",
     "#FF8042",
     "#ff0000",
-    "#ff8000",
-    "#ffbf00",
-    "#bfff00",
-    "#ffbf00",
-    "#ffff00",
     "#9400D3",
     "#4B0082",
     "#0000FF",
