@@ -1,3 +1,8 @@
+/**
+ * Vaccines Type charts
+ * File will read the csv and draw 2 pies chart
+ * one for vaccines type and one for vaccines development stage
+ */
 import React, { useState, useEffect, useCallback } from "react";
 import { PieChart, Pie, Legend, Tooltip, Cell } from "recharts";
 import { readString } from "react-papaparse";

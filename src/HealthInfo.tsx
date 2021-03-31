@@ -1,3 +1,7 @@
+/**
+ * Vaccines Coverage Chart
+ * This component will read the csv file and generate a map of vaccines coverage 
+ */
 import React, { useState, useEffect, useCallback } from "react";
 import { Treemap, Tooltip } from "recharts";
 import { readString } from "react-papaparse";

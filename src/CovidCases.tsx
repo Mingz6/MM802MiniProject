@@ -1,3 +1,7 @@
+/**
+ * Covid Case Line Chart component
+ * The component will read the csv data file and draw a line chart base on the file
+ */
 import React, { useState, useEffect, useCallback } from "react";
 import {
   LineChart,

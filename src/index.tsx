@@ -1,12 +1,12 @@
+/**
+ * React Home Page
+ */
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "../node_modules/antd/dist/antd.css";
-import 'antd/dist/antd.css';
-import './index.css';
-
 
 ReactDOM.render(
   <React.StrictMode>

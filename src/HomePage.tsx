@@ -1,3 +1,11 @@
+/**
+ * Home Page
+ * The page control all component.
+ * This component is only have the header, Footer and sider bar
+ * It will choose the content (other component) base on which menu item be clicked.
+ * UI render with Ant Design
+ */
+// Library
 import * as React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { Layout, Menu} from 'antd';
@@ -8,20 +16,24 @@ import {
   LineChartOutlined,
   AppstoreOutlined,
 } from '@ant-design/icons';
+
+// Style Files
 import 'antd/dist/antd.css';
 import './index.css';
 
+// The content component to be refers
 import Vaccines from "./Vaccines";
 import CovidCases from "./CovidCases";
 import TreatmentsAndVaccines from "./TreatmentsAndVaccines";
 import HealthInfo from "./HealthInfo";
-import MainPage from "./mainpage";
+import MainPage from "./MainPage";
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const HomePage: React.FC = (props) => {
-  const [collapsed, setCollapsed] = React.useState<boolean>(false);
+  const [collapsed, setCollapsed] = React.useState<boolean>(false); // side bar shrink or not
 
+  // onClick action, shrink or extend the bar
   const onCollapse = (collapsed: boolean) => {
     console.log(collapsed);
     setCollapsed(collapsed);
@@ -37,7 +49,6 @@ const HomePage: React.FC = (props) => {
           <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} theme="light" 
             style={{ overflow: 'visible', height: '100vh', position: 'fixed', left: 0, marginTop: 64
           }}>
-            
             <Menu defaultSelectedKeys={['1']}>
               <Menu.Item key="1" icon={<DesktopOutlined />}>
                 <Link to="/"/>
